@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,12 +25,13 @@ public class Bank {
 
     private String name;
 
-    private Double totalFee;
+    private BigDecimal totalFee;
 
-    private Double totalTransfer;
+    private BigDecimal totalTransfer;
 
-    @Embedded
-    private Fee transactionFee;
+    private BigDecimal flatFee;
+
+    private BigDecimal percentFee;
 
     @OneToMany(mappedBy = "bank")
     private List<Account> accounts;

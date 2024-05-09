@@ -1,7 +1,7 @@
 CREATE TABLE transaction
 (
     id          UUID             NOT NULL,
-    amount      DOUBLE PRECISION NOT NULL,
+    amount      NUMERIC(10,2) NOT NULL,
     sender_id   UUID             NOT NULL,
     receiver_id UUID             NOT NULL,
     type        VARCHAR(255),

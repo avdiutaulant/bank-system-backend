@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
@@ -26,7 +27,7 @@ public class Account {
 
     private String lastName;
 
-    private Double balance;
+    private BigDecimal balance;
 
     @ManyToOne
     @JoinColumn(name = "bank_id")

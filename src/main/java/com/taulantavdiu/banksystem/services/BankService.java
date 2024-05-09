@@ -6,12 +6,9 @@ import com.taulantavdiu.banksystem.models.Bank;
 import java.util.List;
 import java.util.UUID;
 
-public interface AccountService {
+public interface BankService {
 
-    Account save(Account account, UUID bankId);
+    Bank save(Bank bank);
 
-    Account findById(UUID id);
-
-    List<Account> findByBankId(UUID id);
 
 }
