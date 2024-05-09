@@ -10,5 +10,6 @@ public interface BankService {
 
     Bank save(Bank bank);
 
+    Bank findById(UUID id);
 
 }

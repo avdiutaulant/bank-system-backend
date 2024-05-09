@@ -10,6 +10,7 @@ import com.taulantavdiu.banksystem.models.Account;
 import com.taulantavdiu.banksystem.models.Bank;
 import com.taulantavdiu.banksystem.services.AccountService;
 import com.taulantavdiu.banksystem.services.BankService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class BankController {
     private final AccountMapper accountMapper;
 
     @PostMapping
-    public ResponseEntity<BankResponseDto> save(@RequestBody BankRequestDto bankRequestDto) {
+    public ResponseEntity<BankResponseDto> save(@RequestBody @Valid BankRequestDto bankRequestDto) {
 
         Bank saveBank = bankService.save(bankMapper.toEntity(bankRequestDto));
 
@@ -56,6 +57,15 @@ public class BankController {
         var accountResponseDtoList = accounts.stream().map(accountMapper::toDto).collect(Collectors.toList());
 
         return ResponseEntity.ok(accountResponseDtoList);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BankResponseDto> findById(@PathVariable UUID id) {
+        var bank = bankService.findById(id);
+
+        var bankResponseDto = bankMapper.toDto(bank);
+
+        return ResponseEntity.ok(bankResponseDto);
     }
 
 

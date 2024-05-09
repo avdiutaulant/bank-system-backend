@@ -4,6 +4,7 @@ import com.taulantavdiu.banksystem.models.Account;
 import com.taulantavdiu.banksystem.models.Bank;
 import com.taulantavdiu.banksystem.repositories.BankRepository;
 import com.taulantavdiu.banksystem.services.BankService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,11 @@ public class BankServiceImpl implements BankService {
         bank.setTotalTransfer(BigDecimal.ZERO);
 
         return bankRepository.save(bank);
+    }
+
+    @Override
+    public Bank findById(UUID id) {
+        return bankRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Bank with id " + id + " not found"));
     }
 
 

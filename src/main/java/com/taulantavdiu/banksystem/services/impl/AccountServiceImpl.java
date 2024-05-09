@@ -2,6 +2,7 @@ package com.taulantavdiu.banksystem.services.impl;
 
 import com.taulantavdiu.banksystem.models.Account;
 import com.taulantavdiu.banksystem.models.Bank;
+import com.taulantavdiu.banksystem.models.Transaction;
 import com.taulantavdiu.banksystem.repositories.AccountRepository;
 import com.taulantavdiu.banksystem.repositories.BankRepository;
 import com.taulantavdiu.banksystem.services.AccountService;
@@ -10,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -46,5 +48,17 @@ public class AccountServiceImpl implements AccountService {
         }
 
         return accountRepository.findByBankId(id);
+    }
+
+    @Override
+    public List<Transaction> findByAccountId(UUID id) {
+        Account account = accountRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Account with id " + id + " not found"));
+
+        List<Transaction> allTransactions = new ArrayList<>();
+        allTransactions.addAll(account.getReceivedTransactions());
+        allTransactions.addAll(account.getSentTransactions());
+
+
+        return allTransactions;
     }
 }

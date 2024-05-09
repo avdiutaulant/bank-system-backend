@@ -5,6 +5,7 @@ CREATE TABLE transaction
     sender_id   UUID             NOT NULL,
     receiver_id UUID             NOT NULL,
     type        VARCHAR(255),
+    reason     VARCHAR(255),
     CONSTRAINT pk_transaction PRIMARY KEY (id)
 );
 
