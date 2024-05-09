@@ -22,14 +22,10 @@ public class Account {
     @GeneratedValue
     private UUID id;
 
-    @NotEmpty
     private String firstName;
 
-    @NotEmpty
     private String lastName;
 
-    @NotNull
-    @PositiveOrZero
     private Double balance;
 
     @ManyToOne

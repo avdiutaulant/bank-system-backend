@@ -22,15 +22,10 @@ public class Bank {
     @GeneratedValue
     private UUID id;
 
-    @NotEmpty
     private String name;
 
-    @NotNull
-    @PositiveOrZero
     private Double totalFee;
 
-    @NotNull
-    @PositiveOrZero
     private Double totalTransfer;
 
     @Embedded

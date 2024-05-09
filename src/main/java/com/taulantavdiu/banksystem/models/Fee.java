@@ -13,11 +13,9 @@ import lombok.*;
 @Embeddable
 public class Fee {
 
-    @NotNull
-    @PositiveOrZero
+
     private Double flatFee;
 
-    @NotNull
-    @PositiveOrZero
+
     private Double percentFee;
 }

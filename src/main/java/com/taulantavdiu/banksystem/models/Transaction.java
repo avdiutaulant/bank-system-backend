@@ -20,16 +20,13 @@ public class Transaction {
     @GeneratedValue
     private UUID id;
 
-    @NotNull
-    @Positive
+
     private Double amount;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private Account sender;
 
-    @NotNull
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private Account receiver;
