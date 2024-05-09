@@ -22,7 +22,7 @@ public class CustomExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .businessErrorCode(BusinessErrorCodes.BAD_REQUEST.getCode())
-                                .businessErrorDescription(BusinessErrorCodes.BAD_REQUEST.getDescription())
+                                .businessErrorDescription(exp.getMessage())
                                 .error(BusinessErrorCodes.BAD_REQUEST.getDescription())
                                 .build()
 
@@ -37,7 +37,7 @@ public class CustomExceptionHandler {
                 .body(
                         ExceptionResponse.builder()
                                 .businessErrorCode(BusinessErrorCodes.NOT_FOUND.getCode())
-                                .businessErrorDescription(BusinessErrorCodes.NOT_FOUND.getDescription())
+                                .businessErrorDescription(exp.getMessage())
                                 .error(BusinessErrorCodes.NOT_FOUND.getDescription())
                                 .build()
 

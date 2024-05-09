@@ -9,6 +9,7 @@ import com.taulantavdiu.banksystem.repositories.AccountRepository;
 import com.taulantavdiu.banksystem.repositories.TransactionRepository;
 import com.taulantavdiu.banksystem.services.TransactionService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -24,15 +25,17 @@ public class TransactionServiceImpl implements TransactionService {
 
 
     @Override
+    @Transactional
     public Transaction addTransaction(Transaction transaction) {
         Account sender = accountRepository.findById(transaction.getSender().getId()).orElseThrow(()-> new EntityNotFoundException("Account with id " + transaction.getSender().getId() + " not found"));
         Account receiver = accountRepository.findById(transaction.getReceiver().getId()).orElseThrow(()-> new EntityNotFoundException("Account with id " + transaction.getReceiver().getId() + " not found"));
 
+        handleFee(transaction, sender);
+
         if (sender.getBalance().compareTo(transaction.getAmount()) < 0) {
-            throw new BadRequestException("Insufficient funds");
+            throw new BadRequestException("You don't have enough funds to make this transaction");
         }
 
-        handleFee(transaction, sender);
 
         sender.setBalance(sender.getBalance().subtract(transaction.getAmount()));
         receiver.setBalance(receiver.getBalance().add(transaction.getAmount()));
@@ -41,6 +44,7 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public Account withdraw(Transaction transaction, UUID accountId) {
 
         Account account = accountRepository.findById(accountId).orElseThrow(()-> new EntityNotFoundException("Account with id " + accountId + " not found"));
@@ -59,12 +63,18 @@ public class TransactionServiceImpl implements TransactionService {
     }
 
     @Override
+    @Transactional
     public Account deposit(Transaction transaction, UUID accountId) {
         Account account = accountRepository.findById(accountId).orElseThrow(()-> new EntityNotFoundException("Account with id " + accountId + " not found"));
 
         transaction.setType(TransactionType.DEPOSIT);
         transaction.setSender(account);
         transaction.setReceiver(account);
+
+        Bank bank = account.getBank();
+
+        bank.setTotalTransfer(bank.getTotalTransfer().add(transaction.getAmount()));
+
         account.setBalance(account.getBalance().add(transaction.getAmount()));
 
         return transactionRepository.save(transaction).getSender();
@@ -76,10 +86,16 @@ public class TransactionServiceImpl implements TransactionService {
 
         if (transaction.getType() == TransactionType.FLAT_FEE_TRANSFER) {
             sender.setBalance(sender.getBalance().subtract(senderBank.getFlatFee()));
+            senderBank.setTotalFee(senderBank.getTotalFee().add(senderBank.getFlatFee()));
         }
 
         if (transaction.getType() == TransactionType.PERCENT_FEE_TRANSFER) {
-            sender.setBalance(sender.getBalance().subtract(senderBank.getPercentFee().multiply(transaction.getAmount()).divide(new BigDecimal(100))));
+            BigDecimal fee = senderBank.getPercentFee().multiply(transaction.getAmount()).divide(new BigDecimal(100));
+            sender.setBalance(sender.getBalance().subtract(fee));
+            senderBank.setTotalFee(senderBank.getTotalFee().add(fee));
         }
+
+        senderBank.setTotalTransfer(senderBank.getTotalTransfer().add(transaction.getAmount()));
+
     }
 }
