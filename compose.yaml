@@ -1,6 +1,6 @@
 services:
   postgres:
-    image: 'postgres:latest'
+    image: 'postgres:15'
     environment:
       - 'POSTGRES_DB=bank_system'
       - 'POSTGRES_PASSWORD=secret'
