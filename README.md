@@ -18,15 +18,27 @@ Ensure you have the following installed:
 Follow these steps to set up the development environment:
 
 1. Clone the repository:
-git clone https://github.com/avdiutaulant/bank-system-backend.git
+- git clone https://github.com/avdiutaulant/bank-system-backend.git
+
+2. Navigate to the project directory:
+- cd bank-system-backend
+
 
  
-2. Start the services:
+3. Start the services:
 - Ensure Docker and Docker Compose are installed on your system.
 - Navigate to the directory containing the docker-compose.yml file.
 - Run the following command:
   
   docker-compose up -d
+  
+4. Once the services are up and running, you can interact with the Bank System using the provided endpoints.
+
+   
+5. Start the application using your code editor
+ - ./mvnw spring-boot:run
+
+
 
 ## Usage
 
