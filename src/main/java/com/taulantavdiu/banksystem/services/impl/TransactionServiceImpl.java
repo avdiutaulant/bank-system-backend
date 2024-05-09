@@ -1,5 +1,6 @@
 package com.taulantavdiu.banksystem.services.impl;
 
+import com.taulantavdiu.banksystem.exceptions.BadRequestException;
 import com.taulantavdiu.banksystem.models.Account;
 import com.taulantavdiu.banksystem.models.Bank;
 import com.taulantavdiu.banksystem.models.Transaction;
@@ -28,7 +29,7 @@ public class TransactionServiceImpl implements TransactionService {
         Account receiver = accountRepository.findById(transaction.getReceiver().getId()).orElseThrow(()-> new EntityNotFoundException("Account with id " + transaction.getReceiver().getId() + " not found"));
 
         if (sender.getBalance().compareTo(transaction.getAmount()) < 0) {
-            throw new IllegalArgumentException("Insufficient funds");
+            throw new BadRequestException("Insufficient funds");
         }
 
         handleFee(transaction, sender);
@@ -45,7 +46,7 @@ public class TransactionServiceImpl implements TransactionService {
         Account account = accountRepository.findById(accountId).orElseThrow(()-> new EntityNotFoundException("Account with id " + accountId + " not found"));
 
         if (account.getBalance().compareTo(transaction.getAmount()) < 0) {
-            throw new IllegalArgumentException("Insufficient funds");
+            throw new BadRequestException("Insufficient funds");
         }
 
         transaction.setType(TransactionType.WITHDRAW);

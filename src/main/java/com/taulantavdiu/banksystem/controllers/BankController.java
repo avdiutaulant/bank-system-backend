@@ -40,7 +40,7 @@ public class BankController {
     }
 
     @PostMapping("{bankId}/accounts")
-    public ResponseEntity<AccountResponseDto> save(@RequestBody AccountRequestDto dto, @PathVariable UUID bankId) {
+    public ResponseEntity<AccountResponseDto> save(@RequestBody @Valid AccountRequestDto dto, @PathVariable UUID bankId) {
 
         var saveAccount = accountService.save(accountMapper.toEntity(dto), bankId);
 
