@@ -1,48 +1,58 @@
-#Bank System
+# Bank System
 
-This is a banking system mini-project developed using Java, PostgreSQL, Spring Boot, Maven and Docker.
+This is a banking system mini-project developed using Java, PostgreSQL, Spring Boot, Maven, and Docker.
 
-#Getting Started
+## Getting Started
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them:
+Ensure you have the following installed:
 
-Java 17 or higher
-Docker
+- Java 17 or higher
+- Docker
 
-### Installing
+### Installation
 
-A step by step series of examples that tell you how to get a development environment running:
+Follow these steps to set up the development environment:
 
-1.Clone the repository:
+1. Clone the repository:
+git clone https://github.com/avdiutaulant/bank-system-backend.git
 
-https://github.com/avdiutaulant/bank-system-backend.git
-
-2.Start the services, make sure you have Docker and Docker Compose installed on your system. Then, navigate to the directory containing the docker-compose.yml file and run the following command:
-
-docker-compose up -d
+ 
+2. Start the services:
+- Ensure Docker and Docker Compose are installed on your system.
+- Navigate to the directory containing the docker-compose.yml file.
+- Run the following command:
+  
+  docker-compose up -d
 
 ## Usage
 
-Bank Management Service exposes the following endpoints:
+### Bank Management Service
 
-POST /api/banks: Creates bank.
-POST /api/banks/{bankId}/accounts: Create an account in the specified bank
-GET /api/banks/{bankId}/accounts: Get a list of accounts for a specific bank
-GET /api/banks/{id}:  Get a bank by id / check bank total transaction fee amount, transfer amount
+Exposed endpoints:
 
-Account Management Service exposes the following endpoints:
+- POST /api/banks: Creates a bank.
+- POST /api/banks/{bankId}/accounts: Creates an account in the specified bank.
+- GET /api/banks/{bankId}/accounts: Retrieves a list of accounts for a specific bank.
+- GET /api/banks/{id}: Retrieves a bank by id / checks bank total transaction fee amount, transfer amount.
 
-GET /api/accounts/{id}: Get an account by id / check account balance
-POST /api/accounts/{id}/withdraw: Withdraw money to an account 
-POST /api/accounts/{id}/deposit: Deposit money to an account 
-GET /api/accounts{id}/transactions: Get a list of transactions for a specific account
+### Account Management Service
 
-Transaction Management Service exposes the following endpoints:
+Exposed endpoints:
 
-POST /api/transactions: Add a transaction from one account to another including Flat Fee and Percent Fee transactionsr 
+- GET /api/accounts/{id}: Retrieves an account by id / checks account balance.
+- POST /api/accounts/{id}/withdraw: Withdraws money from an account.
+- POST /api/accounts/{id}/deposit: Deposits money to an account.
+- GET /api/accounts{id}/transactions: Retrieves a list of transactions for a specific account.
+
+### Transaction Management Service
+
+Exposed endpoints:
+
+- POST /api/transactions: Adds a transaction from one account to another including Flat Fee and Percent Fee transactions.
+
 
 
